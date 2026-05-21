@@ -1,3 +1,10 @@
+import { Banner } from "../components/shared/Banner";
+import BGImage from "../assets/img/banners/2.jpg";
+
 export function About() {
-    return <>À Propos</>
+    return (
+        <>
+            <Banner image={BGImage} />
+        </>
+    )
 }
