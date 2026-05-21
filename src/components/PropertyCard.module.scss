@@ -1,8 +1,37 @@
 @use "../assets/scss/colors";
+@use "../assets/scss/typography";
 
 .propertyCard {
     aspect-ratio: 1/1;
     width: 100%;
     height: 100%;
     background: colors.$color-red;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    overflow: hidden;
+
+    img {
+        border-radius: 16px;
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .backdrop {
+        background: linear-gradient(0deg, #00000090, transparent);
+        position: absolute;
+        inset: 0;
+    }
+
+    h3 {
+        @include typography.card-title();
+        color: #fff;
+        max-width: 75%;
+        z-index: 99;
+    }
 }
