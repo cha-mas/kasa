@@ -10,7 +10,7 @@ export function Router() {
             <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
                 <Route path="about" element={<About />} />
-                {/* 404 */}
+                {/* 404 - Catch all */}
                 <Route path="*" element={<Error />} />
             </Route>
         </Routes>

@@ -16,6 +16,7 @@
 #root>div:first-child {
 	display: flex;
 	flex-direction: column;
+	gap: 32px;
 	min-height: 100dvh;
 	width: 100dvw;
 }
