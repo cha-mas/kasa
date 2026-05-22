@@ -1,0 +1,45 @@
+@use "../../assets/scss/typography";
+@use "../../assets/scss/colors";
+
+.collapsible {
+  width: 100%;
+
+}
+
+.trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  padding: 10px;
+  border-radius: 5px;
+  background: colors.$color-red;
+  color: #ffffff;
+}
+
+.label {
+  @include typography.collapsable-title();
+}
+
+.content {
+  @include typography.collapsable-content();
+  padding: 10px;
+  border-radius: 5px;
+  background: #f6f6f6;
+}
+
+.chevron {
+  transition: transform 0.2s ease-in-out;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.chevronClosed {
+  transform: rotate(0deg);
+}
