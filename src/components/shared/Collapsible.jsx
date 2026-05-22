@@ -9,7 +9,8 @@ const ChevronIcon = ({ isOpen }) => (
     viewBox="0 0 32 32"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={isOpen ? styles.chevronOpen : styles.chevronClosed}
+    className={styles.chevron}
+    style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
   >
     <path
       d="M8 12L16 20L24 12"
@@ -26,20 +27,23 @@ export function Collapsible({ label, defaultOpen = false, children }) {
 
   return (
     <div className={styles.collapsible}>
-      <button
-        className={styles.trigger}
-        onClick={() => setIsOpen(!isOpen)}
-        aria-expanded={isOpen}
-      >
-        <span className={styles.label}>{label}</span>
-        <ChevronIcon isOpen={isOpen} />
-      </button>
+      <div className={styles.header}>
+        <div className={styles.label}>{label}</div>
+        <button
+          className={styles.trigger}
+          onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen}
+          aria-label={isOpen ? 'Fermer' : 'Ouvrir'}
+        >
+          <ChevronIcon isOpen={isOpen} />
+        </button>
+      </div>
 
-      {isOpen && (
+      <div className={isOpen ? styles.panelOpen : styles.panelClosed}>
         <div className={styles.content}>
           {children}
         </div>
-      )}
+      </div>
     </div>
   );
 }
