@@ -22,6 +22,8 @@
 }
 
 main {
+	display: flex;
+	flex-direction: column;
 	max-width: 1240px;
 	width: 100%;
 	padding: 0 16px;

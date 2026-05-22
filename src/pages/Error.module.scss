@@ -1,0 +1,28 @@
+@use "../assets/scss/colors";
+
+.errorContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 64px;
+    flex: 1;
+
+    b {
+        font-weight: 700;
+        font-size: 288px;
+        color: colors.$color-red;
+    }
+
+    h1 {
+        font-weight: 500;
+        font-size: 36px;
+        color: colors.$color-red;
+    }
+
+    a {
+        font-weight: 500;
+        font-size: 18px;
+        text-decoration: underline;
+    }
+}
