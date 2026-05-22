@@ -11,7 +11,7 @@
     margin: auto;
 
     img {
-        height: 68px;
+        height: 46px;
     }
 
     nav a {
@@ -29,4 +29,10 @@
         }
     }
 
+}
+
+@media screen and (min-width: 1024px) {
+    img {
+        height: 68px !important;
+    }
 }
