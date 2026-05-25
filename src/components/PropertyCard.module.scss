@@ -4,7 +4,6 @@
 .propertyCard {
     aspect-ratio: 1/1;
     width: 100%;
-    height: 100%;
     background: colors.$color-red;
     border-radius: 16px;
     padding: 16px;
@@ -18,8 +17,13 @@
         position: absolute;
         inset: 0;
         width: 100%;
-        height: 100%;
+        height: 100% !important;
         object-fit: cover;
+    }
+
+    .link {
+        display: block;
+        width: 100%;
     }
 
     .backdrop {
