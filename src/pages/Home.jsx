@@ -1,6 +1,6 @@
 import { Banner } from "../components/shared/Banner";
 import BGImage from "../assets/img/banners/1.jpg";
-import { useProperties } from '../hooks/useProperties'
+import { useProperties } from '../hooks/properties'
 import { PropertyCard } from '../components/PropertyCard'
 
 export function Home() {
