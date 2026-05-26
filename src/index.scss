@@ -39,7 +39,7 @@ main {
 	padding: 32px;
 	border-radius: 32px;
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: 1fr;
 	grid-gap: 32px;
 }
 
@@ -48,8 +48,8 @@ a {
 	text-decoration: none;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (min-width: 1024px) {
 	.properties-grid {
-		grid-template-columns: 1fr;
+		grid-template-columns: 1fr 1fr 1fr;
 	}
 }

@@ -1,14 +1,46 @@
 import { useParams } from "react-router";
 import { useProperty } from '../hooks/properties'
+import { Collapsible } from '../components/shared/Collapsible'
+import styles from './Details.module.scss';
 
 export function Details() {
     const params = useParams();
 
-    const { data } = useProperty(params.id)
+    const { data, isLoading } = useProperty(params.id)
+
+    if (isLoading || !data) {
+        return <>...</>
+    }
 
     return (
         <>
-            <pre>{JSON.stringify(data, undefined, 4)}</pre>
+            <div className={styles.carousselContainer}>
+                {/* TODO: Carousel */}
+            </div>
+            <section className={styles.information}>
+                <div>
+                    <h1>{data.title}</h1>
+                    <p>{data.location}</p>
+                    <ul className={styles.tags}>
+                        {data.tags.map(tag => (<li key={tag}>{tag}</li>))}
+                    </ul>
+                </div>
+                <div>
+                    <figure className={styles.host}>
+                        <img src={data.host.picture} alt={data.host.name} />
+                        <figcaption>{data.host.name}</figcaption>
+                    </figure>
+                    {/* TODO: Rating */}
+                </div>
+            </section>
+            <section className={styles.details}>
+                <Collapsible label="Description">{data.description}</Collapsible>
+                <Collapsible label="Équipements">
+                    <ul>
+                        {data.equipments.map(item => (<li key={item}>{item}</li>))}
+                    </ul>
+                </Collapsible>
+            </section>
         </>
     )
 }
