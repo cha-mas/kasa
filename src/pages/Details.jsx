@@ -1,4 +1,5 @@
 import { useParams } from "react-router";
+import { Carousel } from '../components/details/Carousel';
 import { useProperty } from '../hooks/properties'
 import { Collapsible } from '../components/shared/Collapsible'
 import { Rating } from '../components/details/Rating'
@@ -16,7 +17,7 @@ export function Details() {
     return (
         <>
             <div className={styles.carousselContainer}>
-                {/* TODO: Carousel */}
+                <Carousel pictures={data.pictures} />
             </div>
             <section className={styles.information}>
                 <div>
