@@ -7,24 +7,19 @@ export function useProperties() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const controller = new AbortController();
-
-        async function fetchProperties() {
+        async function load() {
             setIsLoading(true);
             try {
-                const res = await fetch(BASE_URL, { signal: controller.signal });
-                const json = await res.json();
+                const json = await FETCH_ALL_PROPERTIES();
                 setData(json);
             } catch {
-                // Error handled by ErrorBoundary
+                setData([]);
             } finally {
                 setIsLoading(false);
             }
         }
 
-        fetchProperties();
-
-        return () => controller.abort();
+        load();
     }, []);
 
     return { data, isLoading };
@@ -35,28 +30,37 @@ export function useProperty(id) {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const controller = new AbortController();
-
-        async function fetchProperty() {
+        async function load() {
             setIsLoading(true);
             try {
-                const res = await fetch(BASE_URL, { signal: controller.signal });
-                const json = await res.json();
-                const property = json.find((item) => item.id === id);
-                setData(property ?? null);
+                const property = await FETCH_PEROPERTY(id);
+                setData(property);
             } catch {
-                // Error handled by ErrorBoundary
+                setData(null);
             } finally {
                 setIsLoading(false);
             }
         }
 
-        if (id) {
-            fetchProperty();
-        }
-
-        return () => controller.abort();
+        load();
     }, [id]);
 
     return { data, isLoading };
+}
+
+async function FETCH_ALL_PROPERTIES() {
+    const res = await fetch(BASE_URL);
+    if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    return res.json();
+}
+
+async function FETCH_PEROPERTY(id) {
+    const res = await fetch(BASE_URL);
+    if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    const json = await res.json();
+    return json.find((item) => item.id === id) ?? null;
 }

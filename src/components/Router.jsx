@@ -4,13 +4,18 @@ import { Home } from '../pages/Home';
 import { About } from '../pages/About';
 import { Error } from '../pages/Error';
 import { Details } from '../pages/Details';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 
 export function Router() {
     return <BrowserRouter>
         <Routes>
             <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
-                <Route path="/details/:id" element={<Details />} />
+                <Route path="/details/:id" element={
+                    <ErrorBoundary>
+                        <Details />
+                    </ErrorBoundary>
+                } />
                 <Route path="about" element={<About />} />
                 {/* 404 - Catch all */}
                 <Route path="*" element={<Error />} />

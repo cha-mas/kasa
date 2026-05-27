@@ -12,7 +12,7 @@ export function Home() {
             <Banner image={BGImage}>Chez vous, partout et ailleurs</Banner>
             <section className="properties-grid">
                 {data.map(property => (
-                    <PropertyCard data={property} />
+                    <PropertyCard key={property.id} data={property} />
                 ))}
             </section>
         </>
