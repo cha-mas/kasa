@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import { useProperty } from '../hooks/properties'
 import { Collapsible } from '../components/shared/Collapsible'
-import { Rating } from '../components/Rating'
+import { Rating } from '../components/details/Rating'
 import styles from './Details.module.scss';
 
 export function Details() {
