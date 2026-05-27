@@ -8,6 +8,11 @@
 }
 
 .information {
+    display: flex;
+    flex-direction: column;
+    margin: 32px 0;
+    gap: 16px;
+
     h1 {
         font-weight: 500;
         font-size: 36px;
@@ -17,6 +22,13 @@
     >p {
         font-weight: 500;
         font-size: 18px;
+    }
+
+    >div:last-child {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        align-items: center;
     }
 }
 
@@ -45,8 +57,8 @@
 
     img {
         border-radius: 100%;
-        width: 32px;
-        height: 32px;
+        width: 64px;
+        height: 64px;
         object-fit: cover;
     }
 
@@ -73,14 +85,19 @@
     }
 
     .information {
-        display: flex;
+        flex-direction: row;
         justify-content: space-between;
+
+        >div:last-child {
+            flex-direction: column;
+        }
     }
 
-    .host img {
-        width: 64px;
-        height: 64px;
+    .host figcaption {
+        font-size: 18px;
+        font-weight: 500
     }
+
 
     .details {
         flex-direction: row;

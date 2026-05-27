@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
 import { useProperty } from '../hooks/properties'
 import { Collapsible } from '../components/shared/Collapsible'
+import { Rating } from '../components/Rating'
 import styles from './Details.module.scss';
 
 export function Details() {
@@ -30,7 +31,7 @@ export function Details() {
                         <img src={data.host.picture} alt={data.host.name} />
                         <figcaption>{data.host.name}</figcaption>
                     </figure>
-                    {/* TODO: Rating */}
+                    <Rating value={data.rating} />
                 </div>
             </section>
             <section className={styles.details}>
