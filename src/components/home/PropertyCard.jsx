@@ -1,7 +1,8 @@
+import { memo } from "react";
 import styles from "./PropertyCard.module.scss";
 import { Link } from "react-router";
 
-export function PropertyCard({ data }) {
+const PropertyCard = memo(function PropertyCard({ data }) {
     return (
         <Link to={`/details/${data.id}`} className={styles.link}>
             <article className={styles.propertyCard}>
@@ -11,4 +12,6 @@ export function PropertyCard({ data }) {
             </article>
         </Link>
     )
-}
+});
+
+export { PropertyCard };

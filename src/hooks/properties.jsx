@@ -1,13 +1,62 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const BASE_URL = "/db.json";
 
+// Module-scoped singleton cache for properties data
+let propertiesCache = null;
+let propertiesCachePromise = null;
+
+async function FETCH_ALL_PROPERTIES() {
+    // Return cached data if available
+    if (propertiesCache !== null) {
+        return propertiesCache;
+    }
+    
+    // Return existing promise if fetch is in progress
+    if (propertiesCachePromise !== null) {
+        return propertiesCachePromise;
+    }
+    
+    // Start new fetch
+    propertiesCachePromise = (async () => {
+        const res = await fetch(BASE_URL);
+        if (!res.ok) {
+            propertiesCachePromise = null;
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const json = await res.json();
+        propertiesCache = json;
+        propertiesCachePromise = null;
+        return json;
+    })();
+    
+    return propertiesCachePromise;
+}
+
+async function FETCH_PROPERTY(id) {
+    const properties = await FETCH_ALL_PROPERTIES();
+    return properties.find((item) => item.id === id) ?? null;
+}
+
 export function useProperties() {
-    const [data, setData] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [data, setData] = useState(() => {
+        // Initialize with cached data if available
+        return propertiesCache ?? [];
+    });
+    const [isLoading, setIsLoading] = useState(() => {
+        // Not loading if we already have cached data
+        return propertiesCache === null;
+    });
 
     useEffect(() => {
         async function load() {
+            // Skip if already cached
+            if (propertiesCache !== null) {
+                setData(propertiesCache);
+                setIsLoading(false);
+                return;
+            }
+            
             setIsLoading(true);
             try {
                 const json = await FETCH_ALL_PROPERTIES();
@@ -26,14 +75,30 @@ export function useProperties() {
 }
 
 export function useProperty(id) {
-    const [data, setData] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const [data, setData] = useState(() => {
+        // Initialize with cached data if available
+        if (propertiesCache !== null) {
+            return propertiesCache.find((item) => item.id === id) ?? null;
+        }
+        return null;
+    });
+    const [isLoading, setIsLoading] = useState(() => {
+        // Not loading if we already have cached data
+        return propertiesCache === null;
+    });
 
     useEffect(() => {
         async function load() {
+            // Skip if already cached
+            if (propertiesCache !== null) {
+                setData(propertiesCache.find((item) => item.id === id) ?? null);
+                setIsLoading(false);
+                return;
+            }
+            
             setIsLoading(true);
             try {
-                const property = await FETCH_PEROPERTY(id);
+                const property = await FETCH_PROPERTY(id);
                 setData(property);
             } catch {
                 setData(null);
@@ -46,21 +111,4 @@ export function useProperty(id) {
     }, [id]);
 
     return { data, isLoading };
-}
-
-async function FETCH_ALL_PROPERTIES() {
-    const res = await fetch(BASE_URL);
-    if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-    }
-    return res.json();
-}
-
-async function FETCH_PEROPERTY(id) {
-    const res = await fetch(BASE_URL);
-    if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-    }
-    const json = await res.json();
-    return json.find((item) => item.id === id) ?? null;
 }
