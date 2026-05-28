@@ -1,6 +1,7 @@
-import { Component } from "react";
+import { Component, useCallback } from "react";
 import { useNavigate } from "react-router";
 
+// Must be a Class Component due to the use of the getDerivedStateFromError() method
 class ErrorBoundaryContent extends Component {
     constructor(props) {
         super(props);
@@ -27,9 +28,10 @@ class ErrorBoundaryContent extends Component {
 export function ErrorBoundary({ children }) {
     const navigate = useNavigate();
 
-    const handleError = () => {
-        navigate("/404", { replace: true });
-    };
+    const handleError = useCallback(
+        () => navigate("/404", { replace: true }),
+        [navigate]
+    );
 
     return (
         <ErrorBoundaryContent onError={handleError}>
