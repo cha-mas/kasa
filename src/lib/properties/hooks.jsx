@@ -1,65 +1,27 @@
 import { useEffect, useState } from "react";
+import { propertiesService } from "./service";
 
-const BASE_URL = "/db.json";
-
-// Module-scoped singleton cache for properties data
-let propertiesCache = null;
-let propertiesCachePromise = null;
-
-async function FETCH_ALL_PROPERTIES() {
-    // Return cached data if available
-    if (propertiesCache !== null) {
-        return propertiesCache;
-    }
-
-    // Return existing promise if fetch is in progress
-    if (propertiesCachePromise !== null) {
-        return propertiesCachePromise;
-    }
-
-    // Start new fetch
-    propertiesCachePromise = (async () => {
-        const res = await fetch(BASE_URL);
-        if (!res.ok) {
-            propertiesCachePromise = null;
-            throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        const json = await res.json();
-        propertiesCache = json;
-        propertiesCachePromise = null;
-        return json;
-    })();
-
-    return propertiesCachePromise;
-}
-
-async function FETCH_PROPERTY(id) {
-    const properties = await FETCH_ALL_PROPERTIES();
-    return properties.find((item) => item.id === id) ?? null;
-}
-
+/**
+ * Hook to fetch and manage all properties.
+ * Uses the PropertiesService singleton for caching and data fetching.
+ * @returns {{ data: Array, isLoading: boolean }}
+ */
 export function useProperties() {
-    const [data, setData] = useState(() => {
-        // Initialize with cached data if available
-        return propertiesCache ?? [];
-    });
-    const [isLoading, setIsLoading] = useState(() => {
-        // Not loading if we already have cached data
-        return propertiesCache === null;
-    });
+    const [data, setData] = useState(() => propertiesService.cache ?? []);
+    const [isLoading, setIsLoading] = useState(() => propertiesService.cache === null);
 
     useEffect(() => {
         async function load() {
             // Skip if already cached
-            if (propertiesCache !== null) {
-                setData(propertiesCache);
+            if (propertiesService.cache !== null) {
+                setData(propertiesService.cache);
                 setIsLoading(false);
                 return;
             }
 
             setIsLoading(true);
             try {
-                const json = await FETCH_ALL_PROPERTIES();
+                const json = await propertiesService.getAllProperties();
                 setData(json);
             } catch {
                 setData([]);
@@ -74,34 +36,27 @@ export function useProperties() {
     return { data, isLoading };
 }
 
+/**
+ * Hook to fetch and manage a single property by ID.
+ * Uses the PropertiesService singleton for caching and data fetching.
+ * @param {string} id - The property ID to fetch
+ * @returns {{ data: Object|null, isLoading: boolean }}
+ * @throws {NotFoundError} When property with given ID is not found (caught by ErrorBoundary)
+ */
 export function useProperty(id) {
-    const [data, setData] = useState(() => {
-        // Initialize with cached data if available
-        if (propertiesCache !== null) {
-            return propertiesCache.find((item) => item.id === id) ?? null;
-        }
-        return null;
-    });
-    const [isLoading, setIsLoading] = useState(() => {
-        // Not loading if we already have cached data
-        return propertiesCache === null;
-    });
+    const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         async function load() {
-            // Skip if already cached
-            if (propertiesCache !== null) {
-                setData(propertiesCache.find((item) => item.id === id) ?? null);
-                setIsLoading(false);
-                return;
-            }
-
             setIsLoading(true);
+            setError(null);
             try {
-                const property = await FETCH_PROPERTY(id);
+                const property = await propertiesService.getPropertyById(id);
                 setData(property);
-            } catch {
-                setData(null);
+            } catch (err) {
+                setError(err);
             } finally {
                 setIsLoading(false);
             }
@@ -109,6 +64,11 @@ export function useProperty(id) {
 
         load();
     }, [id]);
+
+    // Re-throw error for ErrorBoundary to catch
+    if (error) {
+        throw error;
+    }
 
     return { data, isLoading };
 }
