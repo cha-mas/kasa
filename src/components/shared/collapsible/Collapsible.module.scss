@@ -1,0 +1,76 @@
+@use "../../../assets/scss/typography";
+@use "../../../assets/scss/colors";
+
+.collapsible {
+	width: 100%;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	padding: 10px;
+	border-radius: 5px;
+	background: colors.$color-red;
+	color: #ffffff;
+	position: relative;
+	z-index: 2;
+}
+
+.label {
+	@include typography.collapsable-title();
+}
+
+.trigger {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	color: #ffffff;
+}
+
+.chevron {
+	transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.panelClosed {
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+	.content {
+		visibility: hidden;
+		opacity: 0;
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+}
+
+.panelOpen {
+	display: grid;
+	grid-template-rows: 1fr;
+	transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+	.content {
+		visibility: visible;
+		opacity: 1;
+	}
+}
+
+.content {
+	@include typography.collapsable-content();
+	padding: 10px;
+	border-radius: 5px;
+	background: #f6f6f6;
+	position: relative;
+	z-index: 1;
+	overflow: hidden;
+	min-height: 0;
+	transition: visibility 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+		opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+		padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}

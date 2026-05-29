@@ -1,0 +1,37 @@
+@use "../../../assets/scss/colors";
+@use "../../../assets/scss/typography";
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1240px;
+    width: 100dvw;
+    padding: 16px;
+    margin: auto;
+
+    img {
+        height: 46px;
+    }
+
+    nav a {
+        font-size: 24px;
+        font-weight: 500;
+        text-decoration: none;
+
+        &:global(.active) {
+            text-decoration: underline;
+        }
+
+        &:first-child {
+            margin-right: 57px;
+        }
+    }
+
+}
+
+@media screen and (min-width: 1024px) {
+    .header img {
+        height: 68px !important;
+    }
+}

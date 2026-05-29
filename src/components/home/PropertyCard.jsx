@@ -2,7 +2,7 @@ import { memo } from "react";
 import styles from "./PropertyCard.module.scss";
 import { Link } from "react-router";
 
-const PropertyCard = memo(function PropertyCard({ data }) {
+function PropertyCardComponent({ data }) {
     return (
         <Link to={`/details/${data.id}`} className={styles.link}>
             <article className={styles.propertyCard}>
@@ -12,6 +12,6 @@ const PropertyCard = memo(function PropertyCard({ data }) {
             </article>
         </Link>
     )
-});
+}
 
-export { PropertyCard };
+export const PropertyCard = memo(PropertyCardComponent);

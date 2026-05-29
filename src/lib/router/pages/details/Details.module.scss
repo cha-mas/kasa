@@ -1,0 +1,88 @@
+@use "../../../../assets/scss/colors";
+@use "../../../../assets/scss/typography";
+
+.carousselContainer {
+    height: 255px;
+    border-radius: 10px;
+    background: #f6f6f6;
+}
+
+.information {
+    h1 {
+        font-weight: 500;
+        font-size: 36px;
+        color: colors.$color-red;
+    }
+
+    >p {
+        font-weight: 500;
+        font-size: 18px;
+    }
+}
+
+.tags {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 16px;
+    list-style: none;
+
+    li {
+        padding: 4px 32px;
+        border-radius: 8px;
+        color: #fff;
+        background: colors.$color-red;
+        font-weight: 700;
+        font-size: 14px;
+    }
+}
+
+.host {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 8px;
+
+    img {
+        border-radius: 100%;
+        width: 32px;
+        height: 32px;
+        object-fit: cover;
+    }
+
+    figcaption {
+        color: colors.$color-red;
+        font-weight: 500;
+    }
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    ul {
+        list-style: none;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .carousselContainer {
+        height: 455px;
+        border-radius: 25px;
+    }
+
+    .information {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .host img {
+        width: 64px;
+        height: 64px;
+    }
+
+    .details {
+        flex-direction: row;
+    }
+}

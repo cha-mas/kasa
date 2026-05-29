@@ -1,0 +1,14 @@
+@use "../../../assets/scss/colors";
+
+.rating {
+    display: flex;
+    gap: 8px;
+}
+
+.filled {
+    color: colors.$color-red;
+}
+
+.empty {
+    color: #E3E3E3;
+}
