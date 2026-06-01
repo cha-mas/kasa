@@ -3,17 +3,12 @@ import { Carousel } from '../../../../components/details/carousel';
 import { useProperty } from '../../../properties'
 import { Collapsible } from '../../../../components/shared/collapsible'
 import { Rating } from '../../../../components/details/rating'
-import { NotFoundError } from '../../../../components/details/NotFoundError'
 import styles from './Details.module.scss';
 
 export function Details() {
     const params = useParams();
 
     const { data, isLoading } = useProperty(params.id);
-
-    if (!isLoading && !data) {
-        throw new NotFoundError(`Property with id '${params.id}' not found`);
-    }
 
     if (isLoading || !data) {
         return <>...</>;
