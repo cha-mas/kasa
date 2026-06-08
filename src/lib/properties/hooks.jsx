@@ -12,13 +12,6 @@ export function useProperties() {
 
     useEffect(() => {
         async function load() {
-            // Skip if already cached
-            if (propertiesService.cache !== null) {
-                setData(propertiesService.cache);
-                setIsLoading(false);
-                return;
-            }
-
             setIsLoading(true);
             try {
                 const json = await propertiesService.getAllProperties();
@@ -52,6 +45,7 @@ export function useProperty(id) {
         async function load() {
             setIsLoading(true);
             setError(null);
+
             try {
                 const property = await propertiesService.getPropertyById(id);
                 setData(property);
