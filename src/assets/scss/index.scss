@@ -17,8 +17,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: 32px;
-	min-height: 100dvh;
-	width: 100dvw;
+
 }
 
 main {
@@ -26,7 +25,6 @@ main {
 	gap: 16px;
 	flex-direction: column;
 	max-width: 1240px;
-	width: 100%;
 	padding: 0 16px;
 	flex: 1;
 	margin: auto;
@@ -35,12 +33,10 @@ main {
 
 .properties-grid {
 	margin: 32px 0;
-	background: #f6f6f6;
-	padding: 32px;
 	border-radius: 32px;
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-gap: 32px;
+	grid-gap: 20px;
 }
 
 a {
@@ -51,5 +47,8 @@ a {
 @media screen and (min-width: 1024px) {
 	.properties-grid {
 		grid-template-columns: 1fr 1fr 1fr;
+		padding: 32px;
+		background: #f6f6f6;
+		grid-gap: 32px;
 	}
 }

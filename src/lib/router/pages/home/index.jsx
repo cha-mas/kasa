@@ -9,7 +9,7 @@ export function Home() {
 
     return (
         <>
-            <Banner image={BGImage}>Chez vous, partout et ailleurs</Banner>
+            <Banner image={BGImage}>Chez vous, <br />partout et ailleurs</Banner>
             <section className="properties-grid">
                 {data.map(property => (
                     <PropertyCard key={property.id} data={property} />

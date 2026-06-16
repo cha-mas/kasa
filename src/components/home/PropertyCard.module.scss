@@ -39,3 +39,11 @@
         z-index: 99;
     }
 }
+
+@media screen and (max-width: 1024px) {
+
+    .propertyCard,
+    .propertyCard img {
+        border-radius: 10px !important;
+    }
+}
